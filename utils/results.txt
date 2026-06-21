@@ -1,0 +1,14 @@
+Quiz Completed!
+Topic: Object-Oriented Programming Basics
+Total Questions: 10
+Correct Answers: 1
+Wrong Answers: 9
+Final Score: 1 / 10
+-----------------------------
+Quiz Completed!
+Topic: Arrays
+Total Questions: 10
+Correct Answers: 5
+Wrong Answers: 5
+Final Score: 5 / 10
+-----------------------------
