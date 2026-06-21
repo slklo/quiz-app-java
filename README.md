@@ -128,8 +128,4 @@ final score: 8 / 10
 
 ## author
 
-student project
-
-## note
-
-this project was developed as an individual assignment for the gui based java quiz application project.
+TunTunSahur
