@@ -1,125 +1,250 @@
-# java quiz application
+# Java Quiz Application
 
-## project title
+## Project Title
 
-development of a gui based java quiz application
+**Development of a GUI-Based Java Quiz Application**
 
-## description
+---
 
-this project is a java gui-based quiz application developed using java swing. the application allows users to select a programming topic and answer multiple-choice questions related to that topic.
+## Description
 
-the questions are loaded from an external text file, and the final quiz result is displayed to the user and saved into a result file.
+This project is a Java Swing-based quiz application developed as part of a university assignment. The application allows users to select a programming topic and answer multiple-choice questions through a graphical user interface.
 
-## quiz topics
+Questions are loaded dynamically from an external file. The application supports **both TXT and CSV quiz formats**, automatically detecting the file type based on its extension. After completing a quiz, the user's score is displayed on the screen and saved to a results file.
 
-the application includes five quiz sections:
+---
 
-1. arrays
-2. loops
-3. conditional statements
-4. functions / methods
-5. object-oriented programming basics
+## Quiz Topics
 
-each topic contains 10 multiple-choice questions.
+The application contains five programming topics:
 
-## features
+1. Arrays
+2. Loops
+3. Conditional Statements
+4. Functions / Methods
+5. Object-Oriented Programming Basics
 
-* graphical user interface using java swing
-* main menu with topic selection
-* topic-based quiz system
-* questions loaded from a text file
-* four answer options for each question
-* answer checking
-* score calculation
-* result display
-* result saving into `results.txt`
-* exit option from the main menu
+Each topic contains **10 multiple-choice questions**.
 
-## project structure
+---
+
+## Features
+
+* Graphical User Interface built with Java Swing
+* Main menu for topic selection
+* Topic-based quiz system
+* Automatic loading of quiz questions
+* Support for both **TXT** and **CSV** quiz files
+* Automatic file format detection (`.txt` or `.csv`)
+* Four answer options for every question
+* Automatic answer checking
+* Score calculation
+* Result screen after completing the quiz
+* Saving results into `results.txt`
+* Exit option from the application
+
+---
+
+## Supported Quiz File Formats
+
+The application automatically detects the quiz file format.
+
+### TXT Format
+
+```
+Section A: Arrays Quiz
+
+Question 1
+What is an array in Java?
+A. Collection of different data types
+B. Collection of elements of the same type
+C. Loop
+D. Variable
+Correct Answer: B
+```
+
+The TXT loader recognizes:
+
+* Section names
+* Question text
+* Four answer options
+* Correct answer
+
+---
+
+### CSV Format
+
+The application also supports CSV files with the following structure:
+
+```csv
+Topic,Question,A,B,C,D,Correct
+Arrays,What is an array in Java?,A. Collection of different data types,B. Collection of elements of the same type,C. Loop,D. Variable,B
+Loops,Which keyword exits a loop?,A. stop,B. break,C. end,D. continue,B
+```
+
+Columns:
+
+| Column   | Description                   |
+| -------- | ----------------------------- |
+| Topic    | Quiz topic                    |
+| Question | Question text                 |
+| A        | Option A                      |
+| B        | Option B                      |
+| C        | Option C                      |
+| D        | Option D                      |
+| Correct  | Correct answer (A, B, C or D) |
+
+---
+
+## Project Structure
 
 ```text
-javaquizapplication/
+JavaQuizApplication/
 │
 ├── quiz-text.txt
-│
+├── quiz_questions.csv
 ├── results.txt
 │
 └── src/
-    ├── main.java
-    ├── question.java
-    ├── quizloader.java
-    ├── resultwriter.java
-    └── quizapp.java
+    ├── Main.java
+    ├── Question.java
+    ├── QuizLoader.java
+    ├── ResultWriter.java
+    └── QuizApp.java
 ```
 
-## file explanation
+---
 
-### main.java
+## File Explanation
 
-this file starts the application.
+### Main.java
 
-### question.java
+Starts the application and launches the graphical user interface.
 
-this class represents one quiz question. it stores the topic, question text, answer options, and the correct answer.
+---
 
-### quizloader.java
+### Question.java
 
-this class reads the questions from `quiz-text.txt` and converts them into `question` objects.
+Represents a single quiz question.
 
-### quizapp.java
+Stores:
 
-this is the main gui class. it creates the menu, displays questions, handles user selections, checks answers, and shows the final score.
+* topic
+* question text
+* option A
+* option B
+* option C
+* option D
+* correct answer
 
-### resultwriter.java
+---
 
-this class saves the final quiz result into `results.txt`.
+### QuizLoader.java
 
-## how to run the project
+Loads quiz questions from an external file.
 
-1. open the project folder in vs code
-2. make sure java jdk is installed
-3. make sure the java extension pack is installed in vs code
-4. place `quiz-text.txt` in the main project folder
-5. open `main.java`
-6. run the program
+Depending on the selected file extension, it automatically chooses the appropriate parser:
 
-## application flow
+* TXT Loader
+* CSV Loader
+
+Both loaders return a list of `Question` objects used by the application.
+
+---
+
+### QuizApp.java
+
+Main Swing GUI class.
+
+Responsible for:
+
+* displaying the main menu
+* selecting quiz topics
+* displaying questions
+* processing user answers
+* calculating scores
+* showing the final result
+
+---
+
+### ResultWriter.java
+
+Writes the quiz result into `results.txt`.
+
+---
+
+## How to Run the Project
+
+1. Open the project in Visual Studio Code.
+2. Install Java JDK.
+3. Install the Java Extension Pack.
+4. Place either:
+
+   * `quiz-text.txt`, or
+   * `quiz_questions.csv`
+
+   in the project root directory.
+5. Open `Main.java`.
+6. Run the application.
+
+The program will automatically detect the file format based on its extension.
+
+---
+
+## Application Flow
 
 ```text
-start application
-↓
-show main menu
-↓
-user selects quiz topic
-↓
-load questions from text file
-↓
-display questions one by one
-↓
-user selects answer
-↓
-check answer
-↓
-move to next question
-↓
-display final result
-↓
-save result to results.txt
+Start Application
+        │
+        ▼
+Display Main Menu
+        │
+        ▼
+User Selects Topic
+        │
+        ▼
+Detect File Type (.txt / .csv)
+        │
+        ▼
+Load Questions
+        │
+        ▼
+Display Questions One by One
+        │
+        ▼
+User Selects Answer
+        │
+        ▼
+Check Answer
+        │
+        ▼
+Update Score
+        │
+        ▼
+Display Final Result
+        │
+        ▼
+Save Result to results.txt
 ```
 
-## result example
+---
+
+## Result Example
 
 ```text
-quiz completed!
+Quiz Completed!
 
-topic: loops
-total questions: 10
-correct answers: 8
-wrong answers: 2
-final score: 8 / 10
+Topic: Loops
+
+Total Questions: 10
+Correct Answers: 8
+Wrong Answers: 2
+Final Score: 8 / 10
 ```
 
-## technologies used
+---
+
+## Technologies Used
 
 * java
 * java swing
@@ -128,4 +253,8 @@ final score: 8 / 10
 
 ## author
 
-TunTunSahur
+student project
+
+## note
+
+this project was developed as an individual assignment for the gui based java quiz application project.

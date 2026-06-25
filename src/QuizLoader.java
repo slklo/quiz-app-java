@@ -7,6 +7,18 @@ import java.util.*;
 public class QuizLoader {
 
     public static ArrayList<Question> loadQuestions(String fileName) {
+
+        if (fileName.toLowerCase().endsWith(".csv")) {
+            return loadQuestionsFromCSV(fileName);
+        } else if (fileName.toLowerCase().endsWith(".txt")) {
+            return loadQuestionsFromTXT(fileName);
+        } else {
+            System.out.println("Unsupported file format. Use .txt or .csv");
+            return new ArrayList<>();
+        }
+    }
+
+    private static ArrayList<Question> loadQuestionsFromTXT(String fileName) {
         ArrayList<Question> questions = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -33,7 +45,11 @@ public class QuizLoader {
                     currentTopic = "Functions / Methods";
                 } else if (line.startsWith("Section E")) {
                     currentTopic = "Object-Oriented Programming Basics";
-                } else if (line.startsWith("What") || line.startsWith("Which") || line.startsWith("An") || line.startsWith("A method") || line.startsWith("Arrays")) {
+                } else if (line.startsWith("What")
+                        || line.startsWith("Which")
+                        || line.startsWith("An")
+                        || line.startsWith("A method")
+                        || line.startsWith("Arrays")) {
                     questionText = line;
                 } else if (line.startsWith("A.")) {
                     optionA = line;
@@ -59,9 +75,79 @@ public class QuizLoader {
             }
 
         } catch (IOException e) {
-            System.out.println("Error reading quiz file: " + e.getMessage());
+            System.out.println("Error reading TXT quiz file: " + e.getMessage());
+        }
+
+        return questions;
+    }
+
+    private static ArrayList<Question> loadQuestionsFromCSV(String fileName) {
+        ArrayList<Question> questions = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+
+            boolean isFirstLine = true;
+
+            while ((line = br.readLine()) != null) {
+
+                if (isFirstLine) {
+                    isFirstLine = false;
+
+                    if (line.toLowerCase().startsWith("topic")) {
+                        continue;
+                    }
+                }
+
+                String[] values = line.split(",");
+
+                if (values.length < 7) {
+                    System.out.println("Invalid CSV line: " + line);
+                    continue;
+                }
+
+                String topic = values[0].trim();
+                String questionText = values[1].trim();
+                String optionA = values[2].trim();
+                String optionB = values[3].trim();
+                String optionC = values[4].trim();
+                String optionD = values[5].trim();
+                String correctAnswer = values[6].trim();
+
+                questions.add(new Question(
+                        topic,
+                        questionText,
+                        optionA,
+                        optionB,
+                        optionC,
+                        optionD,
+                        correctAnswer
+                ));
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading CSV quiz file: " + e.getMessage());
         }
 
         return questions;
     }
 }
+
+// txt format
+
+// Section A
+
+// Which symbol is used to declare an array?
+// A. ()
+// B. {}
+// C. []
+// D. <>
+// Correct Answer: C
+
+
+// csv format
+
+// Topic,Question,A,B,C,D,Correct
+// Arrays,Which symbol declares an array?,(),{},[],<>,C
+// Arrays,What is the first index?,1,-1,0,10,C
+// Loops,Which loop runs at least once?,while,for,do-while,switch,C
